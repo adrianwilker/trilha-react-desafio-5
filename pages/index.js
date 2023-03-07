@@ -9,6 +9,20 @@ import { getGlobalData } from '../utils/global-data';
 import SEO from '../components/SEO';
 
 export default function Index({ posts, globalData }) {
+  const formatDate = (date) => {
+    const dateFormated = new Date(date);
+    let day =
+      dateFormated.getDate() > 10
+        ? `${dateFormated.getDate()}`
+        : `0${dateFormated.getDate()}`;
+    let month =
+      dateFormated.getMonth() > 10
+        ? `${dateFormated.getMonth() + 1}`
+        : `0${dateFormated.getMonth() + 1}`;
+    let year = dateFormated.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <Layout>
       <SEO title={globalData.name} description={globalData.blogTitle} />
@@ -26,11 +40,14 @@ export default function Index({ posts, globalData }) {
               <Link
                 as={`/posts/${post.id}`}
                 href={`/posts/${post.id}`}
+                className="py-6 lg:py-10 px-6 lg:px-16 block focus:outline-none focus:ring-4"
               >
                 <a className="py-6 lg:py-10 px-6 lg:px-16 block focus:outline-none focus:ring-4">
-                  {post.created_ate && (
-                    <p className="uppercase mb-3 font-bold opacity-60">
-                      {post.created_at}
+                  {post.created_at && (
+                    <p className="uppercase mb-2 text-sm font-bold opacity-60">
+                      {post?.author}
+                      &nbsp;&#183;&nbsp;
+                      {formatDate(post.created_at)}
                     </p>
                   )}
                   <h2 className="text-2xl md:text-3xl">{post.title}</h2>
@@ -61,8 +78,7 @@ export default function Index({ posts, globalData }) {
 
 export async function getServerSideProps() {
   const posts = await getPosts();
-  const globalData = getGlobalData()
-
+  const globalData = getGlobalData();
 
   return { props: { posts, globalData } };
 }

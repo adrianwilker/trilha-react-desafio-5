@@ -1,19 +1,28 @@
-import { api } from '../services/api'
+import { api, doPostRequest } from '../services/api';
 
 export const getPosts = async () => {
-    const {data} = await api.get('/posts'); 
+  const { data } = await api.get('/posts');
 
-    if(data){
-        return data;
-    }
+  if (data) {
+    return data;
+  }
 
-    return []
-}
+  return [];
+};
 
 export const getPostBySlug = async (id) => {
+  const { data } = await api.get(`/posts?id=eq.${id}`);
 
-    //TODO: BUSCAR UM POST EM ESPECIFICO.
-    //const {data} = await api.get(`/post?id=eq.${id}`)
+  return data[0];
+};
 
-    return {}
-}
+export const postUserPost = (obj) => {
+  api
+    .post('/posts', obj)
+    .then(function (response) {
+      alert('Post enviado!');
+    })
+    .catch(function (error) {
+      alert('Erro ao enviar o post!');
+    });
+};

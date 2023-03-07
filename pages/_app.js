@@ -1,11 +1,14 @@
 import '../styles/globals.css';
 import 'prismjs/themes/prism-tomorrow.css';
+import { SessionProvider } from 'next-auth/react';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <>
-      <span className="theme-bejamas" />
-      <Component {...pageProps} />
+      <SessionProvider session={session}>
+        <span className="theme-bejamas" />
+        <Component {...pageProps} />
+      </SessionProvider>
     </>
   );
 }
