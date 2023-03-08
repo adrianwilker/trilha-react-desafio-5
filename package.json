@@ -31,6 +31,7 @@
     "classnames": "^2.3.1",
     "cypress": "^10.1.0",
     "gray-matter": "^4.0.2",
+    "marked": "^4.2.12",
     "next": "latest",
     "next-auth": "^4.20.1",
     "next-mdx-remote": "^4.1.0",
@@ -39,6 +40,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.43.5",
+    "react-hydration-provider": "^1.0.2",
     "remark-gfm": "^3.0.1",
     "yup": "^1.0.2"
   },

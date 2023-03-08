@@ -1,5 +1,6 @@
 import { getGlobalData } from '../../utils/global-data';
 import { getPostBySlug } from '../../utils/mdx-utils';
+import { marked } from 'marked'
 
 import { MDXRemote } from 'next-mdx-remote';
 import Head from 'next/head';
@@ -31,6 +32,8 @@ export default function PostPage({ post, globalData }) {
     return `${day}/${month}/${year}`;
   };
 
+  const toMarkup = (output) => ( { __html: marked.parse(output) })
+
   return (
     <Layout>
       <SEO
@@ -52,7 +55,11 @@ export default function PostPage({ post, globalData }) {
           )}
         </header>
         <main>
-          <article className="prose dark:prose-dark">{post.body}</article>
+          <article style={{whiteSpace: 'pre-line', textAlign: 'justify'}}>
+          <div
+          dangerouslySetInnerHTML={toMarkup(post.body)}
+        ></div>
+          </article>
         </main>
       </article>
       <Footer copyrightText={globalData.footerText} />

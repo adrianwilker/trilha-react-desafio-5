@@ -1,5 +1,6 @@
 import { getGlobalData } from '../utils/global-data';
 import Header from '../components/Header';
+import Input from '../components/Input';
 import Footer from '../components/Footer';
 import Layout, { GradientBackground } from '../components/Layout';
 import SEO from '../components/SEO';
@@ -12,16 +13,14 @@ export default function NewPost({ globalData }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [postBody, setPostBody] = useState('');
-  const [author, setAuthor] = useState('');
 
   const sendPost = (e) => {
     e.preventDefault();
-    setAuthor(session?.user?.name);
-    const post = postUserPost({
+    postUserPost({
       title: title,
       description: description,
-      author: author,
       body: postBody,
+      author: session?.user?.name,
     });
     setTitle('');
     setDescription('');
@@ -42,31 +41,24 @@ export default function NewPost({ globalData }) {
           <article className="prose dark:prose-dark">
             {session ? (
               <form onSubmit={sendPost}>
-                <p>
-                  Postar como{' '}
+                <p className="m-0 text-lg">
+                  Postar como&nbsp;
                   <span className="font-bold">{session?.user?.name}</span>
                   &nbsp;ou&nbsp;
                   <a href="#" onClick={() => signOut()} className="italic">
                     Sair
                   </a>
                 </p>
-                <input
-                  type="text"
-                  className="border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder:italic mb-2"
+                <p className="m-0 italic dark:text-opacity-40 text-opacity-40 dark:text-white text-black text-right">Suporte a <a className="dark:text-opacity-40 text-opacity-40 dark:text-white text-black" href="https://adrianwilker.github.io/markdown-previewer/" __blank>linguagem Markdown</a></p>
+                <Input
                   placeholder="Título"
-                  ariaLabel="Título da postagem:"
-                  minLength="5"
-                  maxLength="150"
-                  required
+                  ariaLabel="Título da postagem"
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                 />
-                <input
-                  type="text"
-                  className="border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder:italic mb-2"
+                <Input
                   placeholder="Descrição"
                   ariaLabel="Descrição da postagem:"
-                  maxLength="280"
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
                 />

@@ -28,11 +28,16 @@ export default function Index({ posts, globalData }) {
       <SEO title={globalData.name} description={globalData.blogTitle} />
       <Header name={globalData.name} />
       <main className="w-full">
-        <h1 className="text-3xl lg:text-5xl text-center mb-12">
+        <h1 className="text-3xl lg:text-5xl text-center mb-5">
           {globalData.blogTitle}
         </h1>
+        <nav className="text-center underline align-center mb-10 transition hover:font-semibold">
+          <Link as={'/newpost/'} href={'/newpost/'}>
+            Novo post
+          </Link>
+        </nav>
         <ul className="w-full">
-          {posts.map((post) => (
+          {posts.reverse().map((post) => (
             <li
               key={post.id}
               className="md:first:rounded-t-lg md:last:rounded-b-lg backdrop-blur-lg bg-white dark:bg-black dark:bg-opacity-30 bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-50 transition border border-gray-800 dark:border-white border-opacity-10 dark:border-opacity-10 border-b-0 last:border-b hover:border-b hovered-sibling:border-t-0"
@@ -42,22 +47,18 @@ export default function Index({ posts, globalData }) {
                 href={`/posts/${post.id}`}
                 className="py-6 lg:py-10 px-6 lg:px-16 block focus:outline-none focus:ring-4"
               >
-                <a className="py-6 lg:py-10 px-6 lg:px-16 block focus:outline-none focus:ring-4">
-                  {post.created_at && (
-                    <p className="uppercase mb-2 text-sm font-bold opacity-60">
-                      {post?.author}
-                      &nbsp;&#183;&nbsp;
-                      {formatDate(post.created_at)}
-                    </p>
-                  )}
-                  <h2 className="text-2xl md:text-3xl">{post.title}</h2>
-                  {post.description && (
-                    <p className="mt-3 text-lg opacity-60">
-                      {post.description}
-                    </p>
-                  )}
-                  <ArrowIcon className="mt-4" />
-                </a>
+                {post.created_at && (
+                  <p className="uppercase mb-2 text-sm font-bold opacity-60">
+                    {post?.author}
+                    &nbsp;&#183;&nbsp;
+                    {formatDate(post.created_at)}
+                  </p>
+                )}
+                <h2 className="text-2xl md:text-3xl">{post.title}</h2>
+                {post.description && (
+                  <p className="mt-3 text-lg opacity-60">{post.description}</p>
+                )}
+                <ArrowIcon className="mt-4" />
               </Link>
             </li>
           ))}
